@@ -8,8 +8,6 @@ Our “meme-bot” could also present some interesting technical applications. B
 
 ## Bot Description
 
-
-
 The bot takes in some input from a user that is related to it via a tagging system. It can take in a certain amount of strings as inputs to use them to construct a meme. The bot uses a machine learning algorithm and samples to decide which meme format and image background is best to use for the inputted text.
 
 It then formats the meme as an image and sends it in reply to the user. It asks for a thumbs up or thumbs down reaction based on whether the user liked the meme or not. Depending on the response, it will take it as more data so as to train it’s model. This model is trained intermittently as new data is given to it (this data being an association with strings of text to images).
@@ -52,16 +50,13 @@ Use Case 2: Input Reaction
 
 Storyboard of using the Meme Bot
 
-
 ![sequence diagram](sequenceDiagram.png "sequence diagram")
 
 Sequence diagram of the internal workings of the bot
 
-
 ## Architecture Design
 
 ![architecture diagram](architectureDiagram.png "architecture diagram")
-
 
 For the levels of the above architecture, the team wants to design the system in such a way that all elements can work together effectively and efficiently. The first element of the architecture is the discord bot, which runs on a server (anything that runs node, can be a simple git firebase or other), which interacts with a separated main bot interface system within a AWS EC2 container. In this container will be a python server system that has a number of functions which involve the backend of the bot. Specifically, at this point the Python server will get existing memes from a source such as Kaggle (via API), retrieve said data, store on MongoDB and use data to train machine learning algorithms based in TensorFlow. After algorithm training is done, the actual functionality of the bot user-wise is to take in text and classify it, again using mongoDB and TensorFlow to respectively store and determine outputs. Lastly, Pillow will be used to put the output together into a meme for the user and sent back to the discord bot for posting. The discord bot will gather information about the quality of the meme from user feedback which will then be fed into the TensorFlow algorithm to improve the results of the algorithm going forwards.
 
